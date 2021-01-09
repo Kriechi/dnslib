@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
-from __future__ import print_function
+import argparse, binascii, pprint, traceback
 
-import argparse,binascii,os,pprint,traceback,sys
 from random import randrange
 from dnslib import DNSRecord,DNSQuestion,QTYPE,DNSError
+
 
 def fuzz_delete(b):
     """ Delete byte """
@@ -12,11 +12,13 @@ def fuzz_delete(b):
     del f[randrange(len(b))]
     return f
 
+
 def fuzz_add(b):
     """ Add byte """
     f = b[:]
     f.insert(randrange(len(b)),randrange(256))
     return f
+
 
 def fuzz_change(b):
     """ Change byte """
@@ -24,14 +26,15 @@ def fuzz_change(b):
     f[randrange(len(b))] = randrange(256)
     return f
 
+
 def fname(f):
     try:
         return f.func_name
     except AttributeError:
         return f.__name__
 
-if __name__ == '__main__':
 
+def main():
     a = argparse.ArgumentParser(description="DNS Fuzzer")
     a.add_argument("--server","-s",default="8.8.8.8",
                     help="DNS server address[:port] (default:8.8.8.8:53)")
@@ -96,3 +99,6 @@ if __name__ == '__main__':
     if exceptions:
         pprint.pprint(exceptions)
 
+
+if __name__ == "__main__":
+    main()

@@ -1,5 +1,5 @@
-include README.github
-include run_tests.sh
-include fuzz.py
-include LICENSE
-recursive-include dnslib/test *
+graft src
+graft docs
+graft test
+include README.md LICENSE CHANGELOG.md tox.ini run_tests.sh fuzz.py
+global-exclude *.pyc *.pyo *.swo *.swp *.map *.yml *.DS_Store .coverage
